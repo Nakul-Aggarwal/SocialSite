@@ -1,0 +1,28 @@
+<div class="media">
+	<h4 class="ml-10 mr-5"><a href="{% url 'posts:for_user' username=comment.author.username %}">@{{ comment.author.username }}</a></h4>
+
+	<div class="media-body">
+		<h5>{{ comment.author.username| title }}</h5>
+		<h5>{{ comment.text }}</h5>
+		{% if comment.picture %}
+		<img src="{{ post.picture.url }}" alt="User uploaded picture" style="max-width: 300px;"><br>
+		{% endif %}
+			<time class="time">{{ comment.created_date }}</time>
+		</h5>
+
+		<div class="media-footer">
+			{% if user.is_authenticated and post.user == user and not hide_delete %}
+				<a href="{% url 'posts:deletecomment' pk=comment.pk %}" title="delete" class="btn btn-simple">
+					<span class="fa fa-remove text-danger" aria-hidden="true"></span>
+					<span class="text-danger icon-label">Delete</span>
+				</a>
+
+      {% elif user.is_authenticated and comment.author == user and not hide_delete %}
+        <a href="{% url 'posts:deletecomment' pk=comment.pk %}" title="delete" class="btn btn-simple">
+          <span class="fa fa-remove text-danger" aria-hidden="true"></span>
+          <span class="text-danger icon-label">Delete</span>
+        </a>
+      {% endif %}
+		</div>
+	</div>
+</div>
